@@ -10,6 +10,11 @@ def main():
     
     client = genai.Client(api_key=api_key)
     
+    if (len(sys.argv) <= 1):
+        print("Error: missing argument <Query>")
+        return 1
+    
+    
     # query = input("Please enter your prompt: ")
     query = sys.argv[1]
     
