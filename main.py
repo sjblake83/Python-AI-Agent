@@ -12,7 +12,7 @@ def main():
     
     if (len(sys.argv) <= 1):
         print("Error: missing argument <Query>")
-        return 1
+        sys.exit(1)
     
     
     # query = input("Please enter your prompt: ")
