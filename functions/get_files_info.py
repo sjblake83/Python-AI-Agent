@@ -12,10 +12,10 @@ def get_files_info(working_directory, directory="."):
      
     if abs_directory_path == "":
         return_string.append(f'Error: "{directory}" is not a directory')
-        return return_string
-    if os.path.commonpath([abs_working_directory_path, abs_directory_path]) == "":
+        return "\n".join(return_string)
+    if "python-ai-agent" not in os.path.commonpath([abs_working_directory_path, abs_directory_path]):
         return_string.append(f'Error: Cannot list "{directory}" as it is outside the permitted working directory')
-        return return_string
+        return "\n".join(return_string)
     
     full_path = os.path.join(
         abs_working_directory_path, 
