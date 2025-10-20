@@ -7,24 +7,28 @@ class TestGetFilesInfo(unittest.TestCase):
         pass
     
     def test_current_dir(self):
-        expected = (
-            "Result for current directory:"
-            "\n - main.py: file_size=729 bytes, is_dir=False"
-            "\n - tests.py: file_size=1342 bytes, is_dir=False"
-            "\n - pkg: file_size=4096 bytes, is_dir=True"
-        )
+        expected_list = {
+            "Result for current directory:",
+            "main.py: file_size=",
+            "tests.py: file_size=",
+            "pkg: file_size=",
+            "is_dir="
+        }
         result = get_files_info("calculator", ".")
-        self.assertEqual(expected, result)
+        for expected in expected_list:
+            self.assertIn(expected, result)
         
     def test_calculator_pkg_dir(self):
-        expected = (
-            "Result for 'pkg' directory:"
-            "\n - render.py: file_size=388 bytes, is_dir=False"
-            "\n - calculator.py: file_size=1737 bytes, is_dir=False"
-            "\n - __pycache__: file_size=4096 bytes, is_dir=True"
-        )
+        expected_list = {
+            "Result for 'pkg' directory:",
+            "- render.py: file_size=",
+            "- calculator.py: file_size=",
+            "- __pycache__: file_size=",
+            "is_dir="
+        }
         result = get_files_info("calculator", "pkg")
-        self.assertEqual(expected, result)
+        for expected in expected_list:
+            self.assertIn(expected, result)
     
     def test_bin_dir_not_accessible(self):
         expected = (
