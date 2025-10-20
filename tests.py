@@ -15,6 +15,7 @@ class TestGetFilesInfo(unittest.TestCase):
             "is_dir="
         }
         result = get_files_info("calculator", ".")
+        print(result)
         for expected in expected_list:
             self.assertIn(expected, result)
         
@@ -27,6 +28,7 @@ class TestGetFilesInfo(unittest.TestCase):
             "is_dir="
         }
         result = get_files_info("calculator", "pkg")
+        print(result)
         for expected in expected_list:
             self.assertIn(expected, result)
     
@@ -36,6 +38,7 @@ class TestGetFilesInfo(unittest.TestCase):
             '\nError: Cannot list "/bin" as it is outside the permitted working directory'
         )
         result = get_files_info("calculator", "/bin")
+        print(result)
         self.assertEqual(expected, result)
         
     def test_cannot_step_out_of_project(self):
@@ -44,6 +47,7 @@ class TestGetFilesInfo(unittest.TestCase):
             '\nError: Cannot list "../" as it is outside the permitted working directory'
         )
         result = get_files_info("calculator", "../")
+        print(result)
         self.assertEqual(expected, result)
         
 if __name__ == "__main__":
