@@ -15,7 +15,7 @@ def get_file_content(working_directory, file_path):
         file_path)
     
     if full_path == "" or not os.path.isfile(full_path):
-        return f'Error: "File not found or is not a regular file: "{file_path}"'
+        return f'Error: File not found or is not a regular file: "{file_path}"'
     
     return _read_file(full_path)
     

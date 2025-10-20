@@ -49,8 +49,43 @@ class TestGetFilesInfo(unittest.TestCase):
         result = get_files_info("calculator", "../")
         self.assertEqual(expected, result)
         
+        
     # get_file_content tests
     
+    def test_get_file_content_main_file(self):
+        expected_list = {
+            'def main()',
+            'if __name__ == "__main__":'
+        }
+        result = get_file_content("calculator", "main.py")
+        print(result)
+        for expected in expected_list:
+            self.assertIn(expected, result)
+            
+    def test_get_file_content_calculator_file(self):
+        expected_list = {
+            "def evaluate(self, expression)",
+            "def _evaluate_infix(self, tokens)",
+            "def _apply_operator(self, operators, values)"
+        }
+        result = get_file_content("calculator", "pkg/calculator.py")
+        print(result)
+        for expected in expected_list:
+            self.assertIn(expected, result)
+            
+    def test_get_file_content_cannot_step_out_of_project(self):
+        external_path = "/bin/cat"
+        expected = f'Error: Cannot read "{external_path}" as it is outside the permitted working directory'
+        result = get_file_content("calculator", external_path)
+        print(result)
+        self.assertEqual(expected, result)
+        
+    def test_get_file_content_file_does_not_exist(self):
+        nonexistant_file = "pkg/does_not_exist.py"
+        expected = f'Error: File not found or is not a regular file: "{nonexistant_file}"'
+        result = get_file_content("calculator", nonexistant_file)
+        print(result)
+        self.assertEqual(expected, result)
         
 if __name__ == "__main__":
     unittest.main()
