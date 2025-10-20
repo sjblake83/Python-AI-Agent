@@ -6,6 +6,8 @@ class TestGetFilesInfo(unittest.TestCase):
     def setUp(self):
         pass
     
+    # get_files_info function tests
+    
     def test_current_dir(self):
         expected_list = {
             "Result for current directory:",
@@ -49,6 +51,8 @@ class TestGetFilesInfo(unittest.TestCase):
         result = get_files_info("calculator", "../")
         print(result)
         self.assertEqual(expected, result)
+        
+    # get_file_content tests
         
 if __name__ == "__main__":
     unittest.main()

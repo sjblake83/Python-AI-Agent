@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from config import MAX_CHARS
 
-def get_files_info(working_directory, file_path):
+def get_file_info(working_directory, file_path):
     project_name = Path(__file__).resolve().parent.parent.name
     abs_working_directory_path = os.path.abspath(working_directory)
     abs_directory_path = os.path.abspath(file_path)
