@@ -1,6 +1,7 @@
 import unittest
 from functions.get_files_info import get_files_info
-
+from functions.get_file_content import get_file_content
+from config import MAX_CHARS
 
 class TestGetFilesInfo(unittest.TestCase):
     def setUp(self):
@@ -53,6 +54,16 @@ class TestGetFilesInfo(unittest.TestCase):
         self.assertEqual(expected, result)
         
     # get_file_content tests
+    
+    def test_lorem_ipsum(self):
+        expected_list = {
+            '[...File',
+            f'truncated at {MAX_CHARS} characters]'
+        }
+        result = get_file_content("calculator", "lorem.txt")
+        print(result)
+        for expected in expected_list:
+            self.assertIn(expected, result)
         
 if __name__ == "__main__":
     unittest.main()
