@@ -1,12 +1,12 @@
 import unittest
 from functions.get_files_info import get_files_info
 from functions.get_file_content import get_file_content
-from config import MAX_CHARS
+from config import VERBOSE_TESTS
 
 class TestGetFilesInfo(unittest.TestCase):
     def setUp(self):
         pass
-    
+        
     # get_files_info function tests
     
     def test_get_files_info_current_dir(self):
@@ -18,6 +18,7 @@ class TestGetFilesInfo(unittest.TestCase):
             "is_dir="
         }
         result = get_files_info("calculator", ".")
+        VERBOSE_TESTS and print(result)
         for expected in expected_list:
             self.assertIn(expected, result)
         
@@ -30,6 +31,7 @@ class TestGetFilesInfo(unittest.TestCase):
             "is_dir="
         }
         result = get_files_info("calculator", "pkg")
+        VERBOSE_TESTS and print(result)
         for expected in expected_list:
             self.assertIn(expected, result)
     
@@ -39,6 +41,7 @@ class TestGetFilesInfo(unittest.TestCase):
             '\nError: Cannot list "/bin" as it is outside the permitted working directory'
         )
         result = get_files_info("calculator", "/bin")
+        VERBOSE_TESTS and print(result)
         self.assertEqual(expected, result)
         
     def test_get_files_info_cannot_step_out_of_project(self):
@@ -47,6 +50,7 @@ class TestGetFilesInfo(unittest.TestCase):
             '\nError: Cannot list "../" as it is outside the permitted working directory'
         )
         result = get_files_info("calculator", "../")
+        VERBOSE_TESTS and print(result)
         self.assertEqual(expected, result)
         
         
@@ -58,7 +62,7 @@ class TestGetFilesInfo(unittest.TestCase):
             'if __name__ == "__main__":'
         }
         result = get_file_content("calculator", "main.py")
-        print(result)
+        VERBOSE_TESTS and print(result)
         for expected in expected_list:
             self.assertIn(expected, result)
             
@@ -69,7 +73,7 @@ class TestGetFilesInfo(unittest.TestCase):
             "def _apply_operator(self, operators, values)"
         }
         result = get_file_content("calculator", "pkg/calculator.py")
-        print(result)
+        VERBOSE_TESTS and print(result)
         for expected in expected_list:
             self.assertIn(expected, result)
             
@@ -77,15 +81,19 @@ class TestGetFilesInfo(unittest.TestCase):
         external_path = "/bin/cat"
         expected = f'Error: Cannot read "{external_path}" as it is outside the permitted working directory'
         result = get_file_content("calculator", external_path)
-        print(result)
+        VERBOSE_TESTS and print(result)
         self.assertEqual(expected, result)
         
     def test_get_file_content_file_does_not_exist(self):
         nonexistant_file = "pkg/does_not_exist.py"
         expected = f'Error: File not found or is not a regular file: "{nonexistant_file}"'
         result = get_file_content("calculator", nonexistant_file)
-        print(result)
+        VERBOSE_TESTS and print(result)
         self.assertEqual(expected, result)
-        
+    
+    
+
+            
+            
 if __name__ == "__main__":
     unittest.main()
