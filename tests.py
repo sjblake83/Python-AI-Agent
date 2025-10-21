@@ -1,6 +1,7 @@
 import unittest
 from functions.get_files_info import get_files_info
 from functions.get_file_content import get_file_content
+from functions.write_file import write_file
 from config import VERBOSE_TESTS
 
 class TestGetFilesInfo(unittest.TestCase):
@@ -92,7 +93,31 @@ class TestGetFilesInfo(unittest.TestCase):
         self.assertEqual(expected, result)
     
     
+    # write_file tests
 
+    def test_write_file_lorem_text(self):
+        file_path = "lorem.txt"
+        file_content = "wait, this isn't lorem ipsum"
+        expected = f'Successfully wrote to "{file_path}" ({len(file_content)} characters written)'
+        result = write_file("calculator", file_path, file_content)
+        VERBOSE_TESTS and print(result)
+        self.assertEqual(expected, result)
+        
+    def test_write_file_morelorem_text(self):
+        file_path = "pkg/morelorem.txt"
+        file_content = "lorem ipsum dolor sit amet"
+        expected = f'Successfully wrote to "{file_path}" ({len(file_content)} characters written)'
+        result = write_file("calculator", file_path, file_content)
+        VERBOSE_TESTS and print(result)
+        self.assertEqual(expected, result)
+        
+    def test_write_file_invalid_file_path(self):
+        file_path = "/tmp/temp.txt"
+        file_content = "this should not be allowed"
+        expected = f'Error: Cannot write to "{file_path}" as it is outside the permitted working directory'
+        result = write_file("calculator", file_path, file_content)
+        VERBOSE_TESTS and print(result)
+        self.assertEqual(expected, result)
             
             
 if __name__ == "__main__":

@@ -1,10 +1,9 @@
 import os
-from pathlib import Path
 
 def get_files_info(working_directory, directory="."):
-    project_name = Path(__file__).resolve().parent.parent.name
-    abs_working_directory_path = os.path.abspath(working_directory)
-    abs_directory_path = os.path.abspath(directory)
+    abs_working_dir = os.path.abspath(working_directory)
+    target_dir = os.path.abspath(os.path.join(working_directory, directory))
+        
     return_string = []
     
     if directory == ".":
@@ -12,25 +11,25 @@ def get_files_info(working_directory, directory="."):
     else:
         return_string.append(f"Result for '{directory}' directory:")
      
-    if abs_directory_path == "":
+    if not os.path.isdir(target_dir):
         return_string.append(f'Error: "{directory}" is not a directory')
         return "\n".join(return_string)
-    if project_name not in os.path.commonpath([abs_working_directory_path, abs_directory_path]):
+    if not target_dir.startswith(abs_working_dir):
         return_string.append(f'Error: Cannot list "{directory}" as it is outside the permitted working directory')
         return "\n".join(return_string)
     
-    full_path = os.path.join(
-        abs_working_directory_path, 
-        directory)
-    directory_contents = os.listdir(full_path)
-    return_string.extend(_format_output(directory_contents, full_path))
+    directory_contents = os.listdir(target_dir)
+    return_string.extend(_format_output(directory_contents, target_dir))
     return "\n".join(return_string)
 
 def _format_output(directory_output, full_path):
-    return_string = []
-    for output in directory_output:
-        output_path = os.path.join(full_path, output)
-        file_size = os.path.getsize(output_path)
-        is_dir = os.path.isdir(output_path)
-        return_string.append(f" - {output}: file_size={file_size} bytes, is_dir={is_dir}")
+    try:
+        return_string = []
+        for output in directory_output:
+            output_path = os.path.join(full_path, output)
+            file_size = os.path.getsize(output_path)
+            is_dir = os.path.isdir(output_path)
+            return_string.append(f" - {output}: file_size={file_size} bytes, is_dir={is_dir}")
+    except Exception as e:
+        return f"Error listing files: {e}"
     return return_string
